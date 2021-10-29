@@ -21,7 +21,12 @@ async function run() {
 		await client.connect();
 		const database = client.db('campCruise');
 		const campsCollection = database.collection('camps');
-		console.log('database is up');
+		// get all the camps data
+		app.get('/camps', async (req, res) => {
+			const result = await campsCollection.find({});
+			const camps = await result.toArray();
+			res.json(camps);
+		});
 	} finally {
 		// await client.close()
 	}
