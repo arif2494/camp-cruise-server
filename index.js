@@ -3,6 +3,7 @@ const cors = require('cors');
 const app = express();
 // mongo db import
 const { MongoClient } = require('mongodb');
+const ObjectId = require('mongodb').ObjectId;
 // env config
 require('dotenv').config();
 const port = process.env.PORT || 5000;
@@ -26,6 +27,13 @@ async function run() {
 			const result = await campsCollection.find({});
 			const camps = await result.toArray();
 			res.json(camps);
+		});
+		// get a single camp data
+		app.post('/order', async (req, res) => {
+			const campId = req.body.id.id;
+			const query = { _id: ObjectId(campId) };
+			const result = await campsCollection.findOne(query);
+			res.json(result);
 		});
 	} finally {
 		// await client.close()
