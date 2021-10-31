@@ -42,6 +42,14 @@ async function run() {
 			const result = await ordersCollection.insertOne(order);
 			res.json(result);
 		});
+		// find orders for specefic user
+		app.post('/myorder', async (req, res) => {
+			const userEmail = req.body.userEmail;
+			const query = { email: userEmail };
+			const cursor = await ordersCollection.find(query);
+			const result = await cursor.toArray();
+			res.json(result);
+		});
 	} finally {
 		// await client.close()
 	}
