@@ -76,6 +76,12 @@ async function run() {
 			const result = await ordersCollection.updateOne(filter, updateDoc);
 			res.json(result);
 		});
+		// set a camp data
+		app.post('/newcamp', async (req, res) => {
+			const doc = req.body;
+			const result = await campsCollection.insertOne(doc);
+			res.json(result);
+		});
 	} finally {
 		// await client.close()
 	}
