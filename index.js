@@ -50,6 +50,13 @@ async function run() {
 			const result = await cursor.toArray();
 			res.json(result);
 		});
+		// cancel an order
+		app.delete('/cancel/:id', async (req, res) => {
+			const id = req.params.id;
+			const query = { _id: ObjectId(id) };
+			const result = await ordersCollection.deleteOne(query);
+			res.json(result);
+		});
 	} finally {
 		// await client.close()
 	}
