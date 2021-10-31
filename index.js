@@ -91,7 +91,9 @@ run().catch(console.dir);
 app.get('/', (req, res) => {
 	res.send('server is running');
 });
-
+app.get('yo', (req, res) => {
+	res.send('yoyo');
+});
 app.listen(port, () => {
 	console.log('server is running at port ', port);
 });
