@@ -50,11 +50,30 @@ async function run() {
 			const result = await cursor.toArray();
 			res.json(result);
 		});
+
 		// cancel an order
 		app.delete('/cancel/:id', async (req, res) => {
 			const id = req.params.id;
 			const query = { _id: ObjectId(id) };
 			const result = await ordersCollection.deleteOne(query);
+			res.json(result);
+		});
+		// get all order
+		app.get('/allorders', async (req, res) => {
+			const result = await ordersCollection.find({});
+			const orders = await result.toArray();
+			res.json(orders);
+		});
+		// update order status
+		app.put('/status/:id', async (req, res) => {
+			const id = req.params.id;
+			const filter = { _id: ObjectId(id) };
+			const updateDoc = {
+				$set: {
+					status: 'Approved'
+				}
+			};
+			const result = await ordersCollection.updateOne(filter, updateDoc);
 			res.json(result);
 		});
 	} finally {
