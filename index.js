@@ -89,7 +89,7 @@ async function run() {
 run().catch(console.dir);
 
 app.get('/', (req, res) => {
-	res.send('server is up');
+	res.send('server is running');
 });
 
 app.listen(port, () => {
