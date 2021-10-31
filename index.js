@@ -22,6 +22,7 @@ async function run() {
 		await client.connect();
 		const database = client.db('campCruise');
 		const campsCollection = database.collection('camps');
+		const ordersCollection = database.collection('orders');
 		// get all the camps data
 		app.get('/camps', async (req, res) => {
 			const result = await campsCollection.find({});
@@ -29,10 +30,16 @@ async function run() {
 			res.json(camps);
 		});
 		// get a single camp data
-		app.post('/order', async (req, res) => {
+		app.post('/camp', async (req, res) => {
 			const campId = req.body.id.id;
 			const query = { _id: ObjectId(campId) };
 			const result = await campsCollection.findOne(query);
+			res.json(result);
+		});
+		// save all orders
+		app.post('/orders', async (req, res) => {
+			const order = req.body;
+			const result = await ordersCollection.insertOne(order);
 			res.json(result);
 		});
 	} finally {
